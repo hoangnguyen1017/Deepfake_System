@@ -1,0 +1,108 @@
+
+# ==========================================
+# PYTHON / FASTAPI
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python cache and tools
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.coverage
+htmlcov/
+
+# ==========================================
+# ENVIRONMENT / SECRETS
+# ==========================================
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+secrets/
+credentials/
+token.json
+client_secret*.json
+
+# ==========================================
+# DATABASE
+# ==========================================
+*.db
+*.sqlite
+*.sqlite3
+
+# ==========================================
+# NEXT.JS / NODE
+# ==========================================
+node_modules/
+.next/
+out/
+build/
+dist/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# ==========================================
+# MODEL / DEEP LEARNING
+# ==========================================
+*.pth
+*.pt
+*.ckpt
+*.onnx
+*.h5
+*.keras
+*.safetensors
+
+# ==========================================
+# DATASET / VIDEO / IMAGE DATA
+# ==========================================
+*.lmdb
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.npy
+*.npz
+
+# Dataset folders (adjust if needed)
+datasets/
+dataset/
+data/
+uploads/
+processed_data/
+checkpoints/
+weights/
+
+# ==========================================
+# LOGS / TEMPORARY FILES
+# ==========================================
+*.log
+logs/
+tmp/
+temp/
+.cache/
+*.tmp
+*.bak
+
+# ==========================================
+# IDE / OS
+# ==========================================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

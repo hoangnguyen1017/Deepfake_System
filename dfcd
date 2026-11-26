@@ -1,0 +1,541 @@
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mnew file mode 100644[m
+[1mindex 0000000..00e0e40[m
+[1m--- /dev/null[m
+[1m+++ b/.gitignore[m
+[36m@@ -0,0 +1,108 @@[m
+[32m+[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32m# PYTHON / FASTAPI[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32m__pycache__/[m
+[32m+[m[32m*.py[cod][m
+[32m+[m[32m*$py.class[m
+[32m+[m[32m*.so[m
+[32m+[m[32m.Python[m
+[32m+[m
+[32m+[m[32m# Virtual environments[m
+[32m+[m[32m.venv/[m
+[32m+[m[32mvenv/[m
+[32m+[m[32menv/[m
+[32m+[m[32mENV/[m
+[32m+[m
+[32m+[m[32m# Python cache and tools[m
+[32m+[m[32m.pytest_cache/[m
+[32m+[m[32m.mypy_cache/[m
+[32m+[m[32m.ruff_cache/[m
+[32m+[m[32m.tox/[m
+[32m+[m[32m.coverage[m
+[32m+[m[32mhtmlcov/[m
+[32m+[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32m# ENVIRONMENT / SECRETS[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32m.env[m
+[32m+[m[32m.env.*[m
+[32m+[m[32m!.env.example[m
+[32m+[m
+[32m+[m[32m*.pem[m
+[32m+[m[32m*.key[m
+[32m+[m[32msecrets/[m
+[32m+[m[32mcredentials/[m
+[32m+[m[32mtoken.json[m
+[32m+[m[32mclient_secret*.json[m
+[32m+[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32m# DATABASE[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32m*.db[m
+[32m+[m[32m*.sqlite[m
+[32m+[m[32m*.sqlite3[m
+[32m+[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32m# NEXT.JS / NODE[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32mnode_modules/[m
+[32m+[m[32m.next/[m
+[32m+[m[32mout/[m
+[32m+[m[32mbuild/[m
+[32m+[m[32mdist/[m
+[32m+[m[32mcoverage/[m
+[32m+[m[32mnpm-debug.log*[m
+[32m+[m[32myarn-debug.log*[m
+[32m+[m[32mpnpm-debug.log*[m
+[32m+[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32m# MODEL / DEEP LEARNING[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32m####*.pth[m
+[32m+[m[32m*.pt[m
+[32m+[m[32m*.ckpt[m
+[32m+[m[32m*.onnx[m
+[32m+[m[32m*.h5[m
+[32m+[m[32m*.keras[m
+[32m+[m[32m*.safetensors[m
+[32m+[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32m# DATASET / VIDEO / IMAGE DATA[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32m*.lmdb[m
+[32m+[m[32m*.mp4[m
+[32m+[m[32m*.avi[m
+[32m+[m[32m*.mov[m
+[32m+[m[32m*.mkv[m
+[32m+[m[32m*.npy[m
+[32m+[m[32m*.npz[m
+[32m+[m
+[32m+[m[32m# Dataset folders (adjust if needed)[m
+[32m+[m[32mdatasets/[m
+[32m+[m[32mdataset/[m
+[32m+[m[32mdata/[m
+[32m+[m[32muploads/[m
+[32m+[m[32mprocessed_data/[m
+[32m+[m[32mcheckpoints/[m
+[32m+[m[32mweights/[m
+[32m+[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32m# LOGS / TEMPORARY FILES[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32m*.log[m
+[32m+[m[32mlogs/[m
+[32m+[m[32mtmp/[m
+[32m+[m[32mtemp/[m
+[32m+[m[32m.cache/[m
+[32m+[m[32m*.tmp[m
+[32m+[m[32m*.bak[m
+[32m+[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32m# IDE / OS[m
+[32m+[m[32m# ==========================================[m
+[32m+[m[32m.vscode/[m
+[32m+[m[32m.idea/[m
+[32m+[m[32m.DS_Store[m
+[32m+[m[32mThumbs.db[m
+[32m+[m[32mdesktop.ini[m
+[1mdiff --git a/backend/app/core/config.py b/backend/app/core/config.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b1bbf46[m
+[1m--- /dev/null[m
+[1m+++ b/backend/app/core/config.py[m
+[36m@@ -0,0 +1,27 @@[m
+[32m+[m[32mfrom pydantic_settings import BaseSettings[m
+[32m+[m
+[32m+[m
+[32m+[m[32mclass Settings(BaseSettings):[m
+[32m+[m
+[32m+[m[32m    # JWT[m
+[32m+[m[32m    SECRET_KEY: str[m
+[32m+[m[32m    ALGORITHM: str[m
+[32m+[m
+[32m+[m[32m    ACCESS_TOKEN_EXPIRE_MINUTES: int[m
+[32m+[m[32m    REFRESH_TOKEN_EXPIRE_DAYS: int[m
+[32m+[m[32m    RESET_TOKEN_EXPIRE_MINUTES: int[m
+[32m+[m
+[32m+[m[32m    # Email[m
+[32m+[m[32m    EMAIL_HOST: str[m
+[32m+[m[32m    EMAIL_PORT: int[m
+[32m+[m[32m    EMAIL_ADDRESS: str[m
+[32m+[m[32m    EMAIL_PASSWORD: str[m
+[32m+[m
+[32m+[m[32m    # Frontend[m
+[32m+[m[32m    FRONTEND_URL: str[m
+[32m+[m
+[32m+[m[32m    class Config:[m
+[32m+[m[32m        env_file = ".env"[m
+[32m+[m
+[32m+[m
+[32m+[m[32msettings = Settings()[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/app/core/email.py b/backend/app/core/email.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..7bc8f78[m
+[1m--- /dev/null[m
+[1m+++ b/backend/app/core/email.py[m
+[36m@@ -0,0 +1,88 @@[m
+[32m+[m[32mfrom email.message import EmailMessage[m
+[32m+[m[32mimport aiosmtplib[m
+[32m+[m
+[32m+[m[32mfrom app.core.config import settings[m
+[32m+[m
+[32m+[m
+[32m+[m[32masync def send_reset_email(email: str, token: str):[m
+[32m+[m[32m    reset_link = ([m
+[32m+[m[32m        f"{settings.FRONTEND_URL}/reset-password?token={token}"[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    message = EmailMessage()[m
+[32m+[m[32m    message["From"] = settings.EMAIL_ADDRESS[m
+[32m+[m[32m    message["To"] = email[m
+[32m+[m[32m    message["Subject"] = "Reset your Deepfake System password"[m
+[32m+[m
+[32m+[m[32m    message.set_content([m
+[32m+[m[32m        f"""[m
+[32m+[m[32mHello,[m
+[32m+[m
+[32m+[m[32mYou requested to reset your password.[m
+[32m+[m
+[32m+[m[32mClick the link below to reset it:[m
+[32m+[m
+[32m+[m[32m{reset_link}[m
+[32m+[m
+[32m+[m[32mThis link will expire in {settings.RESET_TOKEN_EXPIRE_MINUTES} minutes.[m
+[32m+[m
+[32m+[m[32mIf you did not request a password reset, please ignore this email.[m
+[32m+[m
+[32m+[m[32mDeepfake Detection System[m
+[32m+[m[32m"""[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    message.add_alternative([m
+[32m+[m[32m        f"""[m
+[32m+[m[32m<html>[m
+[32m+[m[32m<body style="font-family:Arial,sans-serif">[m
+[32m+[m[32m    <h2>Deepfake Detection System</h2>[m
+[32m+[m
+[32m+[m[32m    <p>Hello,</p>[m
+[32m+[m
+[32m+[m[32m    <p>You requested to reset your password.</p>[m
+[32m+[m
+[32m+[m[32m    <p>[m
+[32m+[m[32m        <a href="{reset_link}"[m
+[32m+[m[32m           style="[m
+[32m+[m[32m                display:inline-block;[m
+[32m+[m[32m                padding:12px 24px;[m
+[32m+[m[32m                background:#2563eb;[m
+[32m+[m[32m                color:white;[m
+[32m+[m[32m                text-decoration:none;[m
+[32m+[m[32m                border-radius:6px;">[m
+[32m+[m[32m            Reset Password[m
+[32m+[m[32m        </a>[m
+[32m+[m[32m    </p>[m
+[32m+[m
+[32m+[m[32m    <p>[m
+[32m+[m[32m        Or copy this link:[m
+[32m+[m[32m    </p>[m
+[32m+[m
+[32m+[m[32m    <p>{reset_link}</p>[m
+[32m+[m
+[32m+[m[32m    <p>[m
+[32m+[m[32m        This link will expire in[m
+[32m+[m[32m        {settings.RESET_TOKEN_EXPIRE_MINUTES} minutes.[m
+[32m+[m[32m    </p>[m
+[32m+[m
+[32m+[m[32m    <p>If you did not request this email, please ignore it.</p>[m
+[32m+[m
+[32m+[m[32m    <br>[m
+[32m+[m
+[32m+[m[32m    <p>Deepfake Detection System</p>[m
+[32m+[m
+[32m+[m[32m</body>[m
+[32m+[m[32m</html>[m
+[32m+[m[32m""",[m
+[32m+[m[32m        subtype="html",[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    await aiosmtplib.send([m
+[32m+[m[32m        message,[m
+[32m+[m[32m        hostname=settings.EMAIL_HOST,[m
+[32m+[m[32m        port=settings.EMAIL_PORT,[m
+[32m+[m[32m        username=settings.EMAIL_ADDRESS,[m
+[32m+[m[32m        password=settings.EMAIL_PASSWORD,[m
+[32m+[m[32m        start_tls=True,[m
+[32m+[m[32m    )[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/app/core/jwt.py b/backend/app/core/jwt.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ae4b3f6[m
+[1m--- /dev/null[m
+[1m+++ b/backend/app/core/jwt.py[m
+[36m@@ -0,0 +1,64 @@[m
+[32m+[m[32mfrom datetime import datetime, timedelta[m
+[32m+[m[32mfrom jose import jwt[m
+[32m+[m[32mfrom app.core.config import settings[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef create_access_token(data: dict):[m
+[32m+[m
+[32m+[m[32m    payload = data.copy()[m
+[32m+[m
+[32m+[m[32m    expire = ([m
+[32m+[m[32m        datetime.utcnow()[m
+[32m+[m[32m        + timedelta([m
+[32m+[m[32m            minutes= settings.ACCESS_TOKEN_EXPIRE_MINUTES[m
+[32m+[m[32m        )[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    payload["exp"] = expire[m
+[32m+[m
+[32m+[m[32m    return jwt.encode([m
+[32m+[m[32m        payload,[m
+[32m+[m[32m        settings.SECRET_KEY,[m
+[32m+[m[32m        algorithm=settings.ALGORITHM[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef create_refresh_token(data: dict):[m
+[32m+[m
+[32m+[m[32m    payload = data.copy()[m
+[32m+[m
+[32m+[m[32m    expire = ([m
+[32m+[m[32m        datetime.utcnow()[m
+[32m+[m[32m        + timedelta([m
+[32m+[m[32m            days=settings.REFRESH_TOKEN_EXPIRE_DAYS[m
+[32m+[m[32m        )[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    payload["exp"] = expire[m
+[32m+[m
+[32m+[m[32m    return jwt.encode([m
+[32m+[m[32m        payload,[m
+[32m+[m[32m        settings.SECRET_KEY,[m
+[32m+[m[32m        algorithm=settings.ALGORITHM[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32mdef create_reset_token(data: dict):[m
+[32m+[m
+[32m+[m[32m    payload = data.copy()[m
+[32m+[m
+[32m+[m[32m    expire = ([m
+[32m+[m[32m        datetime.utcnow()[m
+[32m+[m[32m        + timedelta([m
+[32m+[m[32m            minutes=settings.RESET_TOKEN_EXPIRE_MINUTES[m
+[32m+[m[32m        )[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    payload["exp"] = expire[m
+[32m+[m
+[32m+[m[32m    payload["type"] = "reset"[m
+[32m+[m
+[32m+[m[32m    return jwt.encode([m
+[32m+[m[32m        payload,[m
+[32m+[m[32m        settings.SECRET_KEY,[m
+[32m+[m[32m        algorithm=settings.ALGORITHM[m
+[32m+[m[32m    )[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/app/core/security.py b/backend/app/core/security.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..6184d51[m
+[1m--- /dev/null[m
+[1m+++ b/backend/app/core/security.py[m
+[36m@@ -0,0 +1,45 @@[m
+[32m+[m[32mfrom argon2 import PasswordHasher[m
+[32m+[m[32mfrom argon2.exceptions import VerifyMismatchError[m
+[32m+[m[32mimport re[m
+[32m+[m[32mph = PasswordHasher()[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef hash_password(password: str) -> str:[m
+[32m+[m[32m    return ph.hash(password)[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef verify_password([m
+[32m+[m[32m    plain_password: str,[m
+[32m+[m[32m    hashed_password: str[m
+[32m+[m[32m) -> bool:[m
+[32m+[m
+[32m+[m[32m    try:[m
+[32m+[m[32m        return ph.verify([m
+[32m+[m[32m            hashed_password,[m
+[32m+[m[32m            plain_password[m
+[32m+[m[32m        )[m
+[32m+[m
+[32m+[m[32m    except VerifyMismatchError:[m
+[32m+[m[32m        return False[m
+[32m+[m[41m    [m
+[32m+[m
+[32m+[m[32mdef validate_password_strength([m
+[32m+[m[32m    password: str[m
+[32m+[m[32m):[m
+[32m+[m
+[32m+[m[32m    if not re.search(r"[A-Z]", password):[m
+[32m+[m[32m        raise ValueError([m
+[32m+[m[32m            "Password must contain at least 1 uppercase letter"[m
+[32m+[m[32m        )[m
+[32m+[m
+[32m+[m[32m    if not re.search(r"[a-z]", password):[m
+[32m+[m[32m        raise ValueError([m
+[32m+[m[32m            "Password must contain at least 1 lowercase letter"[m
+[32m+[m[32m        )[m
+[32m+[m
+[32m+[m[32m    if not re.search(r"\d", password):[m
+[32m+[m[32m        raise ValueError([m
+[32m+[m[32m            "Password must contain at least 1 number"[m
+[32m+[m[32m        )[m
+[32m+[m
+[32m+[m[32m    return password[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/app/create_db.py b/backend/app/create_db.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..dfcf4d7[m
+[1m--- /dev/null[m
+[1m+++ b/backend/app/create_db.py[m
+[36m@@ -0,0 +1,14 @@[m
+[32m+[m[32mfrom app.database.database import Base, engine[m
+[32m+[m[32m# Import đầy đủ các models để SQLAlchemy tạo đủ bảng[m
+[32m+[m[32mfrom app.database.models import User, PredictionHistory, FileUpload[m[41m [m
+[32m+[m
+[32m+[m[32mdef init_db():[m
+[32m+[m[32m    print("Dropping old tables...")[m
+[32m+[m[32m    Base.metadata.drop_all(bind=engine) # Xóa sạch các bảng cũ nếu có[m
+[32m+[m[41m    [m
+[32m+[m[32m    print("Creating new tables...")[m
+[32m+[m[32m    Base.metadata.create_all(bind=engine) # Tạo lại bảng mới hoàn toàn[m
+[32m+[m[32m    print("Database created successfully!")[m
+[32m+[m
+[32m+[m[32mif __name__ == "__main__":[m
+[32m+[m[32m    init_db()[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/app/database/database.py b/backend/app/database/database.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e740185[m
+[1m--- /dev/null[m
+[1m+++ b/backend/app/database/database.py[m
+[36m@@ -0,0 +1,20 @@[m
+[32m+[m[32mfrom sqlalchemy import create_engine[m
+[32m+[m[32mfrom sqlalchemy.orm import sessionmaker[m
+[32m+[m[32mfrom sqlalchemy.orm import declarative_base[m
+[32m+[m
+[32m+[m[32mDATABASE_URL = ([m
+[32m+[m[32m    "postgresql://postgres:24635789asd@localhost:5432/deepfake_database"[m
+[32m+[m[32m)[m
+[32m+[m
+[32m+[m[32mengine = create_engine([m
+[32m+[m[32m    DATABASE_URL,[m
+[32m+[m[32m    echo=True[m
+[32m+[m[32m)[m
+[32m+[m
+[32m+[m[32mSessionLocal = sessionmaker([m
+[32m+[m[32m    autocommit=False,[m
+[32m+[m[32m    autoflush=False,[m
+[32m+[m[32m    bind=engine[m
+[32m+[m[32m)[m
+[32m+[m
+[32m+[m[32mBase = declarative_base()[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/app/database/deps.py b/backend/app/database/deps.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..a9ec2bc[m
+[1m--- /dev/null[m
+[1m+++ b/backend/app/database/deps.py[m
+[36m@@ -0,0 +1,13 @@[m
+[32m+[m[32m# deps.py[m
+[32m+[m
+[32m+[m[32mfrom .database import SessionLocal[m
+[32m+[m
+[32m+[m[32mdef get_db():[m
+[32m+[m
+[32m+[m[32m    db = SessionLocal()[m
+[32m+[m
+[32m+[m[32m    try:[m
+[32m+[m[32m        yield db[m
+[32m+[m
+[32m+[m[32m    finally:[m
+[32m+[m[32m        db.close()[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/app/database/init_db.py b/backend/app/database/init_db.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ec73e28[m
+[1m--- /dev/null[m
+[1m+++ b/backend/app/database/init_db.py[m
+[36m@@ -0,0 +1,6 @@[m
+[32m+[m[32mfrom .database import engine,Base[m
+[32m+[m[32mfrom .models import *[m
+[32m+[m
+[32m+[m[32mBase.metadata.create_all(bind=engine)[m
+[32m+[m
+[32m+[m[32mprint("Database created!")[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/app/database/models.py b/backend/app/database/models.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..db008a7[m
+[1m--- /dev/null[m
+[1m+++ b/backend/app/database/models.py[m
+[36m@@ -0,0 +1,160 @@[m
+[32m+[m[32m# app/database/models.py[m
+[32m+[m[32mimport enum[m
+[32m+[m[32mfrom datetime import datetime[m
+[32m+[m[32mfrom sqlalchemy import JSON, Boolean, Column, DateTime, Enum, Float, ForeignKey, Integer, String, Text[m
+[32m+[m[32mfrom sqlalchemy.orm import relationship[m
+[32m+[m[32mfrom .database import Base[m
+[32m+[m
+[32m+[m[32mclass UserRole(str, enum.Enum):[m
+[32m+[m[32m    USER = "user"[m
+[32m+[m[32m    MANAGER = "manager"[m
+[32m+[m
+[32m+[m[32mclass ProcessStatus(str, enum.Enum):[m
+[32m+[m[32m    PENDING = "pending"[m
+[32m+[m[32m    PROCESSING = "processing"[m
+[32m+[m[32m    COMPLETED = "completed"[m
+[32m+[m[32m    FAILED = "failed"[m
+[32m+[m
+[32m+[m[32m# --- ENUMS MỚI DÙNG CHO FEEDBACK & NOTIFICATION ---[m
+[32m+[m[32mclass FeedbackStatus(str, enum.Enum):[m
+[32m+[m[32m    PENDING = "pending"      # Chưa phản hồi[m
+[32m+[m[32m    REPLIED = "replied"      # Đã phản hồi[m
+[32m+[m[32m    CLOSED = "closed"        # Đã đóng/giải quyết[m
+[32m+[m
+[32m+[m[32mclass NotificationType(str, enum.Enum):[m
+[32m+[m[32m    FEEDBACK_REPLY = "feedback_reply"[m
+[32m+[m[32m    SYSTEM_ALERT = "system_alert"[m
+[32m+[m
+[32m+[m
+[32m+[m[32mclass User(Base):[m
+[32m+[m[32m    __tablename__ = "users"[m
+[32m+[m
+[32m+[m[32m    user_id = Column(Integer, primary_key=True, index=True)[m
+[32m+[m[32m    username = Column(String(100), unique=True, nullable=False)[m
+[32m+[m[32m    fullname = Column(String(255), nullable=False)[m
+[32m+[m[32m    password = Column(String(255), nullable=False)[m
+[32m+[m[32m    age = Column(Integer, nullable=False)[m
+[32m+[m[32m    email = Column(String(255), unique=True, nullable=False)[m
+[32m+[m[32m    gender = Column(String(20), nullable=True)[m
+[32m+[m[32m    role = Column(Enum(UserRole), default=UserRole.USER, nullable=False)[m
+[32m+[m[32m    is_active = Column(Boolean, default=True, nullable=False)[m
+[32m+[m[32m    created_at = Column(DateTime, default=datetime.utcnow)[m
+[32m+[m[32m    last_login = Column(DateTime, nullable=True)[m
+[32m+[m
+[32m+[m[32m    # Relationships cũ[m
+[32m+[m[32m    uploads = relationship("FileUpload", back_populates="user", cascade="all, delete-orphan")[m
+[32m+[m[32m    predictions = relationship("PredictionHistory", back_populates="user", cascade="all, delete-orphan")[m
+[32m+[m[41m    [m
+[32m+[m[32m    # Relationships MỚI (Bổ sung foreign_keys="[Feedback.user_id]" ở đây)[m
+[32m+[m[32m    feedbacks = relationship([m
+[32m+[m[32m        "Feedback",[m[41m [m
+[32m+[m[32m        back_populates="user",[m[41m [m
+[32m+[m[32m        foreign_keys="[Feedback.user_id]",[m[41m [m
+[32m+[m[32m        cascade="all, delete-orphan"[m
+[32m+[m[32m    )[m
+[32m+[m[32m    notifications = relationship("Notification", back_populates="user", cascade="all, delete-orphan")[m
+[32m+[m
+[32m+[m[32m# Thêm các class này vào app/database/models.py[m
+[32m+[m
+[32m+[m[32mclass FileUpload(Base):[m
+[32m+[m[32m    __tablename__ = "file_uploads"[m
+[32m+[m
+[32m+[m[32m    file_id = Column(Integer, primary_key=True, index=True) # Đổi id -> file_id cho đồng bộ[m
+[32m+[m[32m    user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)[m
+[32m+[m[32m    filename = Column(String(255), nullable=False)[m
+[32m+[m[32m    stored_filename = Column(String(255), nullable=False) # Bổ sung[m
+[32m+[m[32m    file_path = Column(String(500), nullable=False)[m
+[32m+[m[32m    file_size = Column(Integer, nullable=False)          # Bổ sung[m
+[32m+[m[32m    mime_type = Column(String(100), nullable=True)        # Bổ sung[m
+[32m+[m[32m    status = Column(Enum(ProcessStatus), default=ProcessStatus.PENDING, nullable=False) # Bổ sung[m
+[32m+[m[32m    error_message = Column(Text, nullable=True)          # Bổ sung[m
+[32m+[m[32m    file_metadata = Column(JSON, nullable=True)           # Bổ sung[m
+[32m+[m[32m    uploaded_at = Column(DateTime, default=datetime.utcnow)[m
+[32m+[m
+[32m+[m[32m    user = relationship("User", back_populates="uploads")[m
+[32m+[m[32m    predictions = relationship("PredictionHistory", back_populates="upload", cascade="all, delete-orphan")[m
+[32m+[m
+[32m+[m[32mclass PredictionHistory(Base):[m
+[32m+[m[32m    __tablename__ = "prediction_histories"[m
+[32m+[m
+[32m+[m[32m    id = Column(Integer, primary_key=True, index=True)[m
+[32m+[m[32m    user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)[m
+[32m+[m[32m    file_id = Column(Integer, ForeignKey("file_uploads.file_id"), nullable=True)[m
+[32m+[m[32m    video_name = Column(String(255), nullable=True)[m
+[32m+[m[32m    label = Column(String(50), nullable=False)[m[41m [m
+[32m+[m[32m    confidence = Column(Float, nullable=False)[m
+[32m+[m[41m    [m
+[32m+[m[32m    # --- CÁC CỘT ĐÃ ĐƯỢC BỔ SUNG ĐỂ TƯƠNG THÍCH HOÀN TOÀN ---[m
+[32m+[m[32m  
